@@ -27,3 +27,4 @@ define(function(require, exports, module) {
 	// Define your helper functions and prototype methods here
 
 	module.exports = EmptyView;
+});
