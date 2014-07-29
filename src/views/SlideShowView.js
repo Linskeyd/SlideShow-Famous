@@ -1,4 +1,4 @@
-/*** EmptyView.js ***/
+/*** SlideShowView.js ***/
 
 // define this module in Require.js
 define(function(require, exports, module) {
