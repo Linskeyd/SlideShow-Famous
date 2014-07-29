@@ -16,13 +16,14 @@ define(function(require, exports, module) {
 		View.apply(this, arguments);
 
 		this.rootModifier = new StateModifier({
-			size: [400, 450]
+			size: this.options.size
 		});
 
 		this.mainNode = this.add(this.rootModifier);
 
 		// use call to make sure method is called in the correct context
 		_createBackground.call(this);
+		_createFilm.call(this);
 
 	}
 
@@ -31,7 +32,10 @@ define(function(require, exports, module) {
 	SlideView.prototype.constructor = SlideView;
 
 	// Default options for the SlideView class
-	SlideView.DEFAULT_OPTIONS = {};
+	SlideView.DEFAULT_OPTIONS = {
+		size: [400, 450],
+		filmBorder: 15
+	};
 
 	// Define your helper functions and prototype methods here
 	function _createBackground() {
@@ -46,6 +50,27 @@ define(function(require, exports, module) {
 
 		this.mainNode.add(background);
 
+	}
+
+	function _createFilm() {
+
+		this.options.filmSize = this.options.size[0] - 2 * this.options.filmBorder;
+
+		var film = new Surface({
+			size: [this.options.filmSize, this.options.filmSize],
+			properties: {
+				backgroundColor: '#222',
+				zIndex: 1
+			}
+		});
+
+		var filmModifier = new StateModifier({
+			origin: [0.5, 0],
+			align: [0.5, 0],
+			transform: Transform.translate(0, this.options.filmBorder, 1)
+		});
+
+		this.mainNode.add(filmModifier).add(film);
 	}
 
 	module.exports = SlideView;
