@@ -15,6 +15,12 @@ define(function(require, exports, module) {
 		// Applies View's constructor function to SlideView
 		View.apply(this, arguments);
 
+		this.rootModifier = new StateModifier({
+			size: [400, 500]
+		});
+
+		this.mainNode = this.add(this.rootModifier);
+
 	}
 
 	// Establishes prototype chain for SlideView class to inherit from View
