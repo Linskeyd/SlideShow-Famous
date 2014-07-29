@@ -9,11 +9,18 @@ define(function(require, exports, module) {
 	var Transform = require('famous/core/Transform');
 	var StateModifier = require('famous/modifiers/StateModifier');
 
+	// import SlideView
+	var SlideView = require('views/SlideView');
+
 	// Constructor function for the SlideShowView class
 	function SlideShowView() {
 
 		// Applies View's constructor function to SlideShowView
 		View.apply(this, arguments);
+
+		var slideView = new SlideView();
+
+		this.add(slideView);
 
 	}
 
