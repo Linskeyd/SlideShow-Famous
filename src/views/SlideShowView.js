@@ -8,6 +8,7 @@ define(function(require, exports, module) {
 	var Surface = require('famous/core/Surface');
 	var Transform = require('famous/core/Transform');
 	var StateModifier = require('famous/modifiers/StateModifier');
+	var Lightbox = require('famous/views/Lightbox');
 
 	// import SlideView
 	var SlideView = require('views/SlideView');
@@ -18,9 +19,15 @@ define(function(require, exports, module) {
 		// Applies View's constructor function to SlideShowView
 		View.apply(this, arguments);
 
-		var slideView = new SlideView();
+		this.rootModifier = new StateModifier({
+			size: this.options.size,
+			origin: [0.5, 0],
+			align: [0.5, 0]
+		});
 
-		this.add(slideView);
+		this.mainNode = this.add(rootModifier);
+
+		_createLightbox.call(this);
 
 	}
 
@@ -29,9 +36,16 @@ define(function(require, exports, module) {
 	SlideShowView.prototype.constructor = SlideShowView;
 
 	// Default options for the EmptyView class
-	SlideShowView.DEFAULT_OPTIONS = {};
+	SlideShowView.DEFAULT_OPTIONS = {
+		size: [450, 500],
+		lightboxOpts: {}
+	};
 
 	// Define your helper functions and prototype methods here
+	function _createLightbox() {
+		this.lightbox = new Lightbox(this.options.lightboxOpts);
+		this.mainNode.add(lightbox);
+	}
 
 	module.exports = SlideShowView;
 });
