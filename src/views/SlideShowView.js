@@ -42,16 +42,18 @@ define(function(require, exports, module) {
 		size: [450, 500],
 		data: undefined,
 		lightboxOpts: {
-			inTransform: Transform.translate(300, 0, 0),
-			outTransform: Transform.translate(-500, 0, 0),
-			inTransition: {
-				duration: 500,
-				curve: Easing.outBack
-			},
+			inOpacity: 1,
+			inOrigin: [0, 0],
+			showOrigin: [0, 0],
+			outTransform: Transform.rotateY(-Math.PI/2),
+			outOpacity: 1,
+			outOrigin: [0, 0],
+			inTransition: false,
 			outTransition: {
-				duration: 350,
-				curve: Easing.inQuad
-			}
+				duration: 700,
+				curve: 'linear'
+			},
+			overlap: true
 		}
 	};
 
