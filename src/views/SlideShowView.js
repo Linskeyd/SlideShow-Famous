@@ -45,9 +45,22 @@ define(function(require, exports, module) {
 
 	// Define your helper functions and prototype methods here
 	SlideShowView.prototype.showCurrentSlide = function () {
+
 		var slide = this.slides[this.currentIndex];
 		this.lightbox.show(slide);
-	}
+
+	};
+
+	SlideShowView.prototype.showNextSlide = function () {
+
+		this.currentIndex++;
+
+		if(this.currentIndex === this.slides.length)
+			this.currentIndex = 0;
+
+		this.showCurrentSlide();
+
+	};
 
 	function _createLightbox() {
 		this.lightbox = new Lightbox(this.options.lightboxOpts);
@@ -66,6 +79,10 @@ define(function(require, exports, module) {
 			});
 
 			this.slides.push(slide);
+
+			// Add a click listener to each slide
+			//  Will handle by binding to the SlideShowView to keep correct context
+			slide.on('click', this.showNextSlide.bind(this));
 		}
 
 		this.showCurrentSlide();
