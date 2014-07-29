@@ -19,7 +19,7 @@ define(function(require, exports, module) {
 		// Applies View's constructor function to SlideShowView
 		View.apply(this, arguments);
 
-		this.rootModifier = new StateModifier({
+		var rootModifier = new StateModifier({
 			size: this.options.size,
 			origin: [0.5, 0],
 			align: [0.5, 0]
@@ -28,6 +28,7 @@ define(function(require, exports, module) {
 		this.mainNode = this.add(rootModifier);
 
 		_createLightbox.call(this);
+		_createSlides.call(this);
 
 	}
 
@@ -38,13 +39,36 @@ define(function(require, exports, module) {
 	// Default options for the EmptyView class
 	SlideShowView.DEFAULT_OPTIONS = {
 		size: [450, 500],
+		data: undefined,
 		lightboxOpts: {}
 	};
 
 	// Define your helper functions and prototype methods here
+	SlideShowView.prototype.showCurrentSlide = function () {
+		var slide = this.slides[this.currentIndex];
+		this.lightbox.show(slide);
+	}
+
 	function _createLightbox() {
 		this.lightbox = new Lightbox(this.options.lightboxOpts);
-		this.mainNode.add(lightbox);
+		this.mainNode.add(this.lightbox);
+	}
+
+	function _createSlides() {
+		this.slides = [];
+		this.currentIndex = 0;
+
+		for(var i=0; i<this.options.data.length; i++) {
+
+			var slide = new SlideView({
+				size: this.options.size,
+				photoUrl: this.options.data[i]
+			});
+
+			this.slides.push(slide);
+		}
+
+		this.showCurrentSlide();
 	}
 
 	module.exports = SlideShowView;
